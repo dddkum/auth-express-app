@@ -16,15 +16,38 @@ class TokenService {
 
     async saveToken(userId, refreshToken) {
         const tokenData = await tokenModel.findOne({user: userId})
-        if(tokenData) {
+        if (tokenData) {
             tokenData.refreshToken = refreshToken
             return tokenData.save();
         }
         await tokenModel.create({user: userId, refreshToken})
     }
 
+    validateAccessToken(token) {
+        try {
+            const userData = jwt.verify(token, secretAccessTokenKey);
+            return userData;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    validateRefreshToken(token) {
+        try {
+            const userData = jwt.verify(token, secretRefreshTokenKey);
+            return userData;
+        } catch (e) {
+            return null;
+        }
+    }
+
     async removeToken(refreshToken) {
         const token = await tokenModel.deleteOne({refreshToken});
+        return token;
+    }
+
+    async findToken(refreshToken) {
+        const token = await tokenModel.findOne({refreshToken});
         return token;
     }
 }
