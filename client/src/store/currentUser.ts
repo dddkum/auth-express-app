@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import {create} from "zustand";
 
 type CurrentUserStore = {
     email: string;
@@ -14,8 +14,8 @@ export const useCurrentUserStore = create<CurrentUserStore>((set) => ({
     email: "",
     password: "",
     isAdmin: false,
-    setEmail: (email: string) => set({ email }),
-    setPassword: (password: string) => set({ password }),
+    setEmail: (email: string) => set({email}),
+    setPassword: (password: string) => set({password}),
     setIsAdmin: (isAdmin: boolean) => set({isAdmin}),
     reset: () =>
         set({

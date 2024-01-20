@@ -17,7 +17,7 @@ export const login = async (email: string, password: string) => {
     const authStore = useAuthStore.getState();
 
     try {
-        const response = await $api.post('/api/login', { email, password });
+        const response = await $api.post('/api/login', {email, password});
         if (response.status === 200) {
             authStore.setToken(response.data.accessToken)
             authStore.setIsAuthorized(true);

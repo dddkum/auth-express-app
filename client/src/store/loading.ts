@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import {create} from "zustand";
 
 type LoadingStore = {
     isLoading: boolean;
@@ -7,5 +7,5 @@ type LoadingStore = {
 
 export const useLoadingStore = create<LoadingStore>((set) => ({
     isLoading: false,
-    setIsLoading: (isLoading: boolean) => set({ isLoading }),
+    setIsLoading: (isLoading: boolean) => set({isLoading}),
 }));
