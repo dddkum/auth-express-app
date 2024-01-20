@@ -1,1 +1,10 @@
-`run local server` `npm run dev`
+### Инструкция
+*Запуск локального сервера:*
+```bash
+npm run dev
+```
+
+*Запуск приложения клиента:*
+```bash
+npm run dev
+```
