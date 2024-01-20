@@ -1,5 +1,5 @@
-import React from 'react';
 import {useCurrentUserStore} from "../store/currentUser";
+import {login} from '../services/AuthService'
 
 function LoginForm() {
     const {email, password, setEmail, setPassword} = useCurrentUserStore();
@@ -19,7 +19,7 @@ function LoginForm() {
                 type='text'
                 placeholder='password'
             />
-            <button>Вход</button>
+            <button onClick={() => login(email, password)}>Вход</button>
             <button>Регистрация</button>
         </div>
     );
