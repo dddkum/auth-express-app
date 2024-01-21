@@ -1,25 +1,20 @@
 import {create} from "zustand";
 
 type CurrentUserStore = {
-    email: string;
-    password: string;
     isAdmin: boolean;
-    setEmail: (currentLogin: string) => void;
-    setPassword: (currentPassword: string) => void;
+    isUser: boolean;
     setIsAdmin: (isAdmin: boolean) => void;
+    setIsUser: (isUser: boolean) => void;
     reset: () => void;
 };
 
 export const useCurrentUserStore = create<CurrentUserStore>((set) => ({
-    email: "",
-    password: "",
     isAdmin: false,
-    setEmail: (email: string) => set({email}),
-    setPassword: (password: string) => set({password}),
+    isUser: false,
     setIsAdmin: (isAdmin: boolean) => set({isAdmin}),
+    setIsUser: (isUser: boolean) => set({isUser}),
     reset: () =>
         set({
-            email: "",
-            password: "",
+            isAdmin: false
         }),
 }));
