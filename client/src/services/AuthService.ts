@@ -1,12 +1,11 @@
-import $api from '../api/api';
+import $api, {API_URL} from '../api/api';
 import {useAuthStore} from "../store/auth";
 
 export const register = async (email: string, password: string) => {
     const authStore = useAuthStore.getState();
 
     try {
-        const response = await $api.post('/api/registration', {email, password});
-        authStore.setToken(response.data.accessToken)
+        const response = await $api.post('/registration', {email, password});
         console.log(response.data)
     } catch (error) {
         console.error('register error', error);
@@ -17,7 +16,7 @@ export const login = async (email: string, password: string) => {
     const authStore = useAuthStore.getState();
 
     try {
-        const response = await $api.post('/api/login', {email, password});
+        const response = await $api.post('/login', {email, password});
         if (response.status === 200) {
             authStore.setToken(response.data.accessToken)
             authStore.setIsAuthorized(true);
@@ -33,7 +32,7 @@ export const login = async (email: string, password: string) => {
 export const logout = async () => {
     const authStore = useAuthStore.getState()
     try {
-        const response = await $api.post('/api/logout');
+        const response = await $api.post('/logout');
         console.log(response.data)
     } catch (error) {
         console.error('logout error', error);
