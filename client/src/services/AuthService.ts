@@ -5,7 +5,6 @@ import {AuthResponse} from "../models/response/AuthResponse";
 import {useCurrentUserStore} from "../store/currentUser";
 
 export const register = async (email: string, password: string) => {
-    const authStore = useAuthStore.getState();
 
     try {
         const response = await $api.post('/registration', {email, password});
@@ -17,11 +16,13 @@ export const register = async (email: string, password: string) => {
 
 export const login = async (email: string, password: string) => {
     const authStore = useAuthStore.getState();
+    const currentUserStore = useCurrentUserStore.getState();
 
     try {
         const response = await $api.post('/login', {email, password});
         if (response.status === 200) {
             authStore.setToken(response.data.accessToken)
+            currentUserStore.setUser(response.data.user)
             authStore.setIsAuthorized(true);
         } else {
             authStore.setIsAuthorized(false);
