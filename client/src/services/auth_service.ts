@@ -1,8 +1,8 @@
 import $api, {API_URL} from '../api/api';
-import {useAuthStore} from "../store/auth";
+import {useAuthStore} from "../store/auth_store";
 import axios from "axios";
-import {AuthResponse} from "../models/response/AuthResponse";
-import {useCurrentUserStore} from "../store/currentUser";
+import {IAuthResponse} from "../types/IAuthResponse";
+import {useCurrentUserStore} from "../store/currentUser_store";
 
 export const register = async (email: string, password: string) => {
 
@@ -23,13 +23,13 @@ export const login = async (email: string, password: string) => {
         if (response.status === 200) {
             authStore.setToken(response.data.accessToken)
             currentUserStore.setUser(response.data.user)
-            authStore.setIsAuthorized(true);
+            authStore.setIsAuthenticated(true);
         } else {
-            authStore.setIsAuthorized(false);
+            authStore.setIsAuthenticated(false);
         }
     } catch (error) {
         console.error('login error', error);
-        authStore.setIsAuthorized(false);
+        authStore.setIsAuthenticated(false);
     }
 };
 
@@ -48,10 +48,8 @@ export const logout = async () => {
 export const checkAuth = async () => {
     const authStore = useAuthStore.getState();
     try {
-        const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
-        console.log(response);
+        const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
         authStore.setToken(response.data.accessToken)
-        authStore.setIsAuthorized(true);
     } catch (error) {
         console.log(error.response?.data?.message)
     }
