@@ -1,25 +1,23 @@
-import "./App.scss";
-import LoginForm from "./components/Login/LoginForm";
-import {useEffect} from "react";
-import {checkAuth, logout} from "./services/AuthService";
-import {useAuthStore} from "./store/auth";
-import {useCurrentUserStore} from "./store/currentUser";
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import LoginPage from "./pages/login_page";
+import MainPage from "./pages/main_page";
+import MainLayout from "./main-layout";
+import {useAuthStore} from "./store/auth_store";
 
 function App() {
-
-    const {isAuthorized} = useAuthStore();
-    const {user} = useCurrentUserStore();
-
-    useEffect(() => {
-        checkAuth()
-    }, [])
+    const {isAuthenticated} = useAuthStore();
 
     return (
-        <div>
-            <h1>{isAuthorized ? `Пользователь авторизован ${user?.email}` : <LoginForm/>}</h1>
-            <button onClick={logout}>Выход</button>
-        </div>
-    )
+        <MainLayout>
+            <Router>
+                <Routes>
+                    <Route path="/" element={isAuthenticated ? <Navigate to="/main"/> : <Navigate to="/login"/>}/>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/main" element={<MainPage/>}/>
+                </Routes>
+            </Router>
+        </MainLayout>
+    );
 }
 
 export default App;
