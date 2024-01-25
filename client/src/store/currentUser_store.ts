@@ -1,15 +1,6 @@
 import {create} from "zustand";
-import {IUser} from "../models/IUser";
-
-type CurrentUserStore = {
-    isAdmin: boolean;
-    setIsAdmin: (isAdmin: boolean) => void;
-    isUser: boolean;
-    setIsUser: (isUser: boolean) => void;
-    user: object;
-    setUser: (user: IUser) => void;
-    reset: () => void;
-};
+import {IUser} from "../types/IUser";
+import {CurrentUserStore} from "../types/ICurrentUser";
 
 export const useCurrentUserStore = create<CurrentUserStore>((set) => ({
     isAdmin: false,
