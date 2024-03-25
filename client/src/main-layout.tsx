@@ -10,7 +10,12 @@ const MainLayout = ({ children }: Props) => {
         checkAuth()
     }, [])
 
-    return <div>{children}</div>
+    return (
+        <>
+            {/*here will be sidebar and header*/}
+            <div className="container-fluid">{children}</div>
+        </>
+    )
 }
 
 export default MainLayout
