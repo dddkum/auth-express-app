@@ -2,25 +2,25 @@
 @import 'bootstrap/scss/_variables';
 
 $light-colors: (
-        'light': #f8f9fa,
-        'primary': hsl(0, 100%, 50%),
-        'secondary': hsl(0, 0%, 13%),
-        'info': #2688eb,
-        'success': #047a2b,
-        'danger': #e10216,
-        'warning': #ffc107,
-        'dark': #000000
+    'light': #f8f9fa,
+    'primary': hsl(0, 100%, 50%),
+    'secondary': hsl(0, 0%, 13%),
+    'info': #2688eb,
+    'success': #047a2b,
+    'danger': #e10216,
+    'warning': #ffc107,
+    'dark': #000000,
 );
 
 $dark-colors: (
-        'dark-light': #f8f9fa,
-        'dark-primary': #141414,
-        'dark-secondary': #222222,
-        'dark-info': #2688eb,
-        'dark-success': #047a2b,
-        'dark-danger': #e10216,
-        'dark-warning': #ffc107,
-        'dark-dark': #000000
+    'dark-light': #f8f9fa,
+    'dark-primary': #141414,
+    'dark-secondary': #222222,
+    'dark-info': #2688eb,
+    'dark-success': #047a2b,
+    'dark-danger': #e10216,
+    'dark-warning': #ffc107,
+    'dark-dark': #000000,
 );
 
 $theme-colors: map-merge($theme-colors, $dark-colors);

@@ -1,18 +1,16 @@
-import "./main.scss";
-import {useEffect} from "react";
-import {checkAuth} from "./services/auth_service";
+import './main.scss'
+import { ReactNode, useEffect } from 'react'
+import { checkAuth } from './services/auth_service'
 
-const MainLayout = ({children}) => {
-
+interface Props {
+    children: ReactNode
+}
+const MainLayout = ({ children }: Props) => {
     useEffect(() => {
         checkAuth()
     }, [])
 
-    return (
-        <div>
-            {children}
-        </div>
-    )
+    return <div>{children}</div>
 }
 
-export default MainLayout;
+export default MainLayout

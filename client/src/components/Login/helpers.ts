@@ -1,4 +1,4 @@
-import {login, register} from "../../services/auth_service";
+import { login, register } from '../../services/auth_service'
 
 export const submitLogin = async (e, email, password) => {
     e.preventDefault()

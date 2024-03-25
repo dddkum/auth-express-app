@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {submitLogin, submitRegister} from "./helpers";
+import { useState } from 'react'
+import { submitLogin, submitRegister } from './helpers'
 
 function LoginForm() {
     const [email, setEmail] = useState('')
@@ -32,17 +32,23 @@ function LoginForm() {
                         <label htmlFor="inputPassword">Пароль</label>
                     </div>
                     <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
-                        <button className="btn btn-primary"
-                                onClick={(e) => submitLogin(e, email, password)}>Вход
+                        <button
+                            className="btn btn-primary"
+                            onClick={e => submitLogin(e, email, password)}
+                        >
+                            Вход
                         </button>
-                        <button className="btn btn-dark-primary ms-2"
-                                onClick={(e) => submitRegister(e, email, password)}>Регистрация
+                        <button
+                            className="btn btn-dark-primary ms-2"
+                            onClick={e => submitRegister(e, email, password)}
+                        >
+                            Регистрация
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-    );
+    )
 }
 
-export default LoginForm;
+export default LoginForm

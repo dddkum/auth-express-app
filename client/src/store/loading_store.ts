@@ -1,7 +1,7 @@
-import {create} from "zustand";
-import {LoadingStore} from "../types/ILoading";
+import { create } from 'zustand'
+import { LoadingStore } from '../types/ILoading'
 
-export const useLoadingStore = create<LoadingStore>((set) => ({
+export const useLoadingStore = create<LoadingStore>(set => ({
     isLoading: false,
-    setIsLoading: (isLoading: boolean) => set({isLoading}),
-}));
+    setIsLoading: isLoading => set({ isLoading }),
+}))
