@@ -1,4 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
+import {submitLogin} from "./helpers.ts";
 
 interface IFormInput {
     email: string
@@ -11,10 +12,10 @@ function LoginForm() {
         formState: { errors },
     } = useForm<IFormInput>()
     const handleSubmitForm: SubmitHandler<IFormInput> = data =>
-        console.log(data)
+        submitLogin(data)
 
     return (
-        <div className="d-flex align-items-center justify-content-center vh-100">
+        <>
             <form
                 onSubmit={handleSubmit(handleSubmitForm)}
                 className="d-flex flex-column w-50"
@@ -49,7 +50,7 @@ function LoginForm() {
                                 'Password must be at least 8 characters long',
                         },
                         pattern: {
-                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                            value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/,
                             message:
                                 'Password must have at least one uppercase letter, one lowercase letter, one digit, and one special character',
                         },

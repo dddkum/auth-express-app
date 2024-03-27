@@ -5,3 +5,8 @@ export interface IAuthResponse {
     refreshToken: string
     user: IUser
 }
+
+export interface ILoginData {
+    email: string
+    password: string
+}

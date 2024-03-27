@@ -1,8 +1,9 @@
 import $api, { API_URL } from '../api/api'
 import { useAuthStore } from '../store/auth_store'
 import axios from 'axios'
-import { IAuthResponse } from '../types/IAuthResponse'
+import { IAuthResponse, ILoginData } from '../types/IAuthResponse'
 import { useCurrentUserStore } from '../store/currentUser_store'
+import { useToast } from '../components/toasts/UseToast.ts'
 
 export const register = async (email: string, password: string) => {
     try {
@@ -13,23 +14,28 @@ export const register = async (email: string, password: string) => {
     }
 }
 
-export const login = async (email: string, password: string) => {
-    const authStore = useAuthStore.getState()
-    const currentUserStore = useCurrentUserStore.getState()
+export const login = async (data: ILoginData) => {
+    const { setToken, setIsAuthenticated } = useAuthStore.getState()
+    const { setUser } = useCurrentUserStore.getState()
 
-    try {
-        const response = await $api.post('/login', { email, password })
-        if (response.status === 200) {
-            authStore.setToken(response.data.accessToken)
-            currentUserStore.setUser(response.data.user)
-            authStore.setIsAuthenticated(true)
-        } else {
-            authStore.setIsAuthenticated(false)
-        }
-    } catch (error) {
-        console.error('login error', error)
-        authStore.setIsAuthenticated(false)
-    }
+    await $api
+        .post('/login', { data })
+        .then(response => {
+            setToken(response.data.accessToken)
+            setUser(response.data.user)
+            setIsAuthenticated(true)
+            useToast({
+                message: response.data.message,
+                type: 'success',
+            })
+        })
+        .catch(error => {
+            useToast({
+                message: error.response.data.message,
+                type: 'error',
+            })
+            setIsAuthenticated(false)
+        })
 }
 
 export const logout = async () => {
