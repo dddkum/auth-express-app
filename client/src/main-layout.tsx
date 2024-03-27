@@ -1,6 +1,7 @@
-import './main.scss'
+import './app/styles/main.scss'
 import { ReactNode, useEffect } from 'react'
 import { checkAuth } from './services/auth_service'
+import { Navbar } from './widgets/Navbar'
 
 interface Props {
     children: ReactNode
@@ -12,8 +13,8 @@ const MainLayout = ({ children }: Props) => {
 
     return (
         <>
-            {/*here will be sidebar and header*/}
             <div className="container-fluid">{children}</div>
+            <Navbar />
         </>
     )
 }

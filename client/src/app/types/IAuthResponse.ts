@@ -1,4 +1,4 @@
-import { IUser } from './IUser'
+import { IUser } from './IUser.ts'
 
 export interface IAuthResponse {
     accessToken: string
@@ -6,7 +6,7 @@ export interface IAuthResponse {
     user: IUser
 }
 
-export interface ILoginData {
+export interface IAuthData {
     email: string
     password: string
 }

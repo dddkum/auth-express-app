@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import { IUser } from '../types/IUser'
-import { CurrentUserStore } from '../types/ICurrentUser'
+import { IUser } from '../types/IUser.ts'
+import { CurrentUserStore } from '../types/ICurrentUser.ts'
 
 export const useCurrentUserStore = create<CurrentUserStore>(set => ({
     isAdmin: false,

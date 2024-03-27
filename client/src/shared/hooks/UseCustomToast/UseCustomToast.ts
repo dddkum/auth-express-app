@@ -4,7 +4,7 @@ interface IToastProps {
     message: string
     type: 'info' | 'success' | 'warning' | 'error' | 'default'
 }
-export const useToast = ({ message, type }: IToastProps) => {
+export const useCustomToast = ({ message, type }: IToastProps) => {
     toast(message, {
         position: 'bottom-right',
         autoClose: 5000,

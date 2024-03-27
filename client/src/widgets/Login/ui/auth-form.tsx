@@ -1,23 +1,27 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import {submitLogin} from "./helpers.ts";
+import { submitLogin } from './helpers.ts'
+import { useState } from 'react'
+import { ButtonLoader, PageLoader } from '../../../shared/loaders'
 
 interface IFormInput {
     email: string
     password: string
 }
-function LoginForm() {
+export const LoginForm = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<IFormInput>()
-    const handleSubmitForm: SubmitHandler<IFormInput> = data =>
+
+    const [isLoading, setIsLoading] = useState(true)
+    const handleSubmitLoginForm: SubmitHandler<IFormInput> = data =>
         submitLogin(data)
 
     return (
         <>
             <form
-                onSubmit={handleSubmit(handleSubmitForm)}
+                onSubmit={handleSubmit(handleSubmitLoginForm)}
                 className="d-flex flex-column w-50"
             >
                 <label htmlFor="email">Email</label>
@@ -25,11 +29,11 @@ function LoginForm() {
                     {...register('email', {
                         required: {
                             value: true,
-                            message: 'Email is required',
+                            message: 'Поле {field} обязательно!',
                         },
                         pattern: {
                             value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/,
-                            message: 'Invalid email address',
+                            message: 'Введите корректный адрес почты',
                         },
                     })}
                 />
@@ -39,40 +43,41 @@ function LoginForm() {
                     Пароль
                 </label>
                 <input
+                    type="password"
                     {...register('password', {
                         required: {
                             value: true,
-                            message: 'Password is required',
+                            message: 'Поле {field} обязательно!',
                         },
                         minLength: {
                             value: 8,
                             message:
-                                'Password must be at least 8 characters long',
+                                'Минимальная длина пароля 8 символов',
                         },
                         pattern: {
-                            value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/,
+                            value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\s:])(\S){8,16}$/,
                             message:
-                                'Password must have at least one uppercase letter, one lowercase letter, one digit, and one special character',
+                                'Пароль должен состоять минимум из одной заглавной, прописной букв, спец. символа и цифры',
                         },
                     })}
                 />
                 <span className="text-danger">{errors.password?.message}</span>
 
-                <button type="submit" className="btn btn-outline-warning mt-5">
-                    Вход
+                <button type="submit" className="btn btn-outline-warning mt-5 d-flex align-items-center justify-content-center">
+                    {!isLoading && 'Вход'}
+                    <ButtonLoader loading={isLoading} size={25} />
                 </button>
                 <button
                     type="button"
                     className="btn btn-warning mt-2"
                     onClick={() =>
-                        console.log('register button need to configure')
+                        setIsLoading(!isLoading)
                     }
                 >
-                    Регистрация
+                    Зарегистрироваться
                 </button>
             </form>
-        </div>
+            <PageLoader loading={isLoading} />
+        </>
     )
 }
-
-export default LoginForm

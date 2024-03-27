@@ -1,5 +1,5 @@
-@import 'bootstrap/scss/_functions';
-@import 'bootstrap/scss/_variables';
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
 
 $light-colors: (
     'light': #f8f9fa,
@@ -25,4 +25,4 @@ $dark-colors: (
 
 $theme-colors: map-merge($theme-colors, $dark-colors);
 
-@import 'bootstrap/scss/bootstrap';
+@import '../../../node_modules/bootstrap/scss/bootstrap';

@@ -1,20 +1,25 @@
-import $api, { API_URL } from '../api/api'
-import { useAuthStore } from '../store/auth_store'
+import $api, { API_URL } from '../app/api/api'
+import { useAuthStore } from '../app/store/auth_store'
 import axios from 'axios'
-import { IAuthResponse, ILoginData } from '../types/IAuthResponse'
-import { useCurrentUserStore } from '../store/currentUser_store'
-import { useToast } from '../components/toasts/UseToast.ts'
+import { IAuthData, IAuthResponse } from '../app/types/IAuthResponse'
+import { useCurrentUserStore } from '../app/store/currentUser_store'
+import { useCustomToast } from '../shared/hooks/UseCustomToast/UseCustomToast.ts'
 
-export const register = async (email: string, password: string) => {
-    try {
-        const response = await $api.post('/registration', { email, password })
-        console.log(response.data)
-    } catch (error) {
-        console.error('register error', error)
-    }
+export const register = async (data: IAuthData) => {
+    await $api
+        .post('/registration', { data })
+        .then(response =>
+            useCustomToast({ message: response.data.message, type: 'success' })
+        )
+        .catch(error =>
+            useCustomToast({
+                message: error.response.data.message,
+                type: 'error',
+            })
+        )
 }
 
-export const login = async (data: ILoginData) => {
+export const login = async (data: IAuthData) => {
     const { setToken, setIsAuthenticated } = useAuthStore.getState()
     const { setUser } = useCurrentUserStore.getState()
 
@@ -24,13 +29,13 @@ export const login = async (data: ILoginData) => {
             setToken(response.data.accessToken)
             setUser(response.data.user)
             setIsAuthenticated(true)
-            useToast({
+            useCustomToast({
                 message: response.data.message,
                 type: 'success',
             })
         })
         .catch(error => {
-            useToast({
+            useCustomToast({
                 message: error.response.data.message,
                 type: 'error',
             })
@@ -51,13 +56,11 @@ export const logout = async () => {
 }
 
 export const checkAuth = async () => {
-    const authStore = useAuthStore.getState()
-    try {
-        const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {
+    const { setToken } = useAuthStore.getState()
+    await axios
+        .get<IAuthResponse>(`${API_URL}/refresh`, {
             withCredentials: true,
         })
-        authStore.setToken(response.data.accessToken)
-    } catch (error) {
-        console.log(error.response?.data?.message)
-    }
+        .then(response => setToken(response.data.accessToken))
+        .catch(error => console.log(error.response.data.message))
 }

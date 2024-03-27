@@ -4,10 +4,10 @@ import {
     Route,
     Navigate,
 } from 'react-router-dom'
-import LoginPage from './pages/login_page'
-import MainPage from './pages/main_page'
 import MainLayout from './main-layout'
-import { useAuthStore } from './store/auth_store'
+import { useAuthStore } from './app/store/auth_store'
+import { AuthPage } from './pages/AuthPage'
+import { MainPage } from './pages/MainPage'
 
 function App() {
     const { isAuthenticated } = useAuthStore()
@@ -22,11 +22,11 @@ function App() {
                             isAuthenticated ? (
                                 <Navigate to="/main" />
                             ) : (
-                                <Navigate to="/login" />
+                                <Navigate to="/auth" />
                             )
                         }
                     />
-                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/auth" element={<AuthPage />} />
                     <Route path="/main" element={<MainPage />} />
                 </Routes>
             </Router>
