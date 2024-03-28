@@ -1,27 +1,73 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { submitLogin } from './helpers.ts'
+import { useMutation } from '@tanstack/react-query'
+import { useCustomToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
+import { useAuthStore } from '../../../app/store/auth_store.ts'
+import { useCurrentUserStore } from '../../../app/store/currentUser_store.ts'
+import { signIn, signUp } from '../../../services/auth_service.ts'
+import { ButtonLoader } from '../../../shared/loaders'
 import { useState } from 'react'
-import { ButtonLoader, PageLoader } from '../../../shared/loaders'
 
 interface IFormInput {
     email: string
     password: string
 }
 export const LoginForm = () => {
+    const { setToken, setIsAuthenticated } = useAuthStore()
+    const { setUser } = useCurrentUserStore()
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<IFormInput>()
 
-    const [isLoading, setIsLoading] = useState(true)
-    const handleSubmitLoginForm: SubmitHandler<IFormInput> = data =>
-        submitLogin(data)
+    const [methodSelected, setMethodSelected] = useState('')
+
+    const loginMutation = useMutation({
+        mutationFn: (data: IFormInput) => signIn(data),
+        onSuccess: response => {
+            setToken(response.data.accessToken)
+            setUser(response.data.user)
+            setIsAuthenticated(true)
+            useCustomToast({
+                message: response.data.message,
+                type: 'success',
+            })
+        },
+        onError: error => {
+            useCustomToast({
+                message: error.response.data.message,
+                type: 'error',
+            })
+            setIsAuthenticated(false)
+        },
+    })
+
+    const registerMutation = useMutation({
+        mutationFn: (data: IFormInput) => signUp(data),
+        onSuccess: response => {
+            useCustomToast({
+                message: response.data.message,
+                type: 'success',
+            })
+        },
+        onError: error => {
+            useCustomToast({
+                message: error.response.data.message,
+                type: 'error',
+            })
+        },
+    })
+
+    const handleSubmitAuthForm: SubmitHandler<IFormInput> = data => {
+        methodSelected === 'signUp'
+            ? registerMutation.mutate(data)
+            : loginMutation.mutate(data)
+    }
 
     return (
         <>
             <form
-                onSubmit={handleSubmit(handleSubmitLoginForm)}
+                onSubmit={handleSubmit(handleSubmitAuthForm)}
                 className="d-flex flex-column w-50"
             >
                 <label htmlFor="email">Email</label>
@@ -29,7 +75,7 @@ export const LoginForm = () => {
                     {...register('email', {
                         required: {
                             value: true,
-                            message: 'Поле {field} обязательно!',
+                            message: 'Поле email обязательно!',
                         },
                         pattern: {
                             value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/,
@@ -47,37 +93,33 @@ export const LoginForm = () => {
                     {...register('password', {
                         required: {
                             value: true,
-                            message: 'Поле {field} обязательно!',
+                            message: 'Поле пароль обязательно!',
                         },
                         minLength: {
-                            value: 8,
-                            message:
-                                'Минимальная длина пароля 8 символов',
-                        },
-                        pattern: {
-                            value: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\s:])(\S){8,16}$/,
-                            message:
-                                'Пароль должен состоять минимум из одной заглавной, прописной букв, спец. символа и цифры',
+                            value: 6,
+                            message: 'Минимальная длина пароля 6 символов',
                         },
                     })}
                 />
                 <span className="text-danger">{errors.password?.message}</span>
 
-                <button type="submit" className="btn btn-outline-warning mt-5 d-flex align-items-center justify-content-center">
-                    {!isLoading && 'Вход'}
-                    <ButtonLoader loading={isLoading} size={25} />
+                <button
+                    type="submit"
+                    className="btn btn-outline-warning mt-5 d-flex align-items-center justify-content-center"
+                    disabled={loginMutation.isPending}
+                    onClick={() => setMethodSelected('signIn')}
+                >
+                    <ButtonLoader loading={loginMutation.isPending} size={24} />
+                    {!loginMutation.isPending && 'Вход'}
                 </button>
                 <button
-                    type="button"
+                    type="submit"
                     className="btn btn-warning mt-2"
-                    onClick={() =>
-                        setIsLoading(!isLoading)
-                    }
+                    onClick={() => setMethodSelected('signUp')}
                 >
                     Зарегистрироваться
                 </button>
             </form>
-            <PageLoader loading={isLoading} />
         </>
     )
 }
