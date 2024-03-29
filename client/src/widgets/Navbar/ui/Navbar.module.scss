@@ -1,6 +1,12 @@
 .Navbar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: black;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: black;
+}
+
+.navbar_tab {
+    border-radius: 0;
 }

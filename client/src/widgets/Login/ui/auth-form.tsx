@@ -1,11 +1,17 @@
-import { SubmitHandler, useForm } from 'react-hook-form'
+import {
+    FieldError,
+    FieldErrors,
+    SubmitHandler,
+    useForm,
+} from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { useCustomToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
 import { useAuthStore } from '../../../app/store/auth_store.ts'
 import { useCurrentUserStore } from '../../../app/store/currentUser_store.ts'
-import { signIn, signUp } from '../../../services/auth_service.ts'
 import { ButtonLoader } from '../../../shared/loaders'
 import { useState } from 'react'
+import $api from '../../../app/api/api.ts'
+import { AxiosError, AxiosResponse } from 'axios'
 
 interface IFormInput {
     email: string
@@ -14,22 +20,29 @@ interface IFormInput {
 export const LoginForm = () => {
     const { setToken, setIsAuthenticated } = useAuthStore()
     const { setUser } = useCurrentUserStore()
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<IFormInput>()
+    const { register, handleSubmit } = useForm<IFormInput>()
 
     const [methodSelected, setMethodSelected] = useState('')
 
-    const loginMutation = useMutation({
-        mutationFn: (data: IFormInput) => signIn(data),
-        onSuccess: response => {
+    const handleSubmitAuthForm: SubmitHandler<IFormInput> = data => {
+        methodSelected === 'signUp'
+            ? registerMutation.mutate(data)
+            : loginMutation.mutate(data)
+    }
+
+    const loginMutation = useMutation<
+        AxiosResponse,
+        AxiosError<any, any> | any
+    >({
+        mutationFn(data) {
+            return $api.post('/login', data)
+        },
+        onSuccess(response) {
             setToken(response.data.accessToken)
             setUser(response.data.user)
             setIsAuthenticated(true)
             useCustomToast({
-                message: response.data.message,
+                message: 'Вы вошли в свой профиль',
                 type: 'success',
             })
         },
@@ -42,15 +55,24 @@ export const LoginForm = () => {
         },
     })
 
-    const registerMutation = useMutation({
-        mutationFn: (data: IFormInput) => signUp(data),
-        onSuccess: response => {
+    const registerMutation = useMutation<
+        AxiosResponse,
+        AxiosError<any, any> | any
+    >({
+        mutationFn(data) {
+            return $api.post('/registration', data)
+        },
+        onSuccess(response) {
+            setToken(response.data.accessToken)
+            setUser(response.data.user)
+            setIsAuthenticated(true)
             useCustomToast({
-                message: response.data.message,
+                message:
+                    'Вы успешно зарегистрировались и будете перенаправлены в свой профиль',
                 type: 'success',
             })
         },
-        onError: error => {
+        onError(error) {
             useCustomToast({
                 message: error.response.data.message,
                 type: 'error',
@@ -58,19 +80,27 @@ export const LoginForm = () => {
         },
     })
 
-    const handleSubmitAuthForm: SubmitHandler<IFormInput> = data => {
-        methodSelected === 'signUp'
-            ? registerMutation.mutate(data)
-            : loginMutation.mutate(data)
+    const handleValidationError = (errors: FieldErrors<FieldError>) => {
+        for (const [_, error] of Object.entries(errors)) {
+            useCustomToast({
+                message: (error.message ?? error) as string,
+                type: 'error',
+            })
+        }
     }
 
     return (
         <>
             <form
-                onSubmit={handleSubmit(handleSubmitAuthForm)}
+                onSubmit={handleSubmit(
+                    handleSubmitAuthForm,
+                    handleValidationError
+                )}
                 className="d-flex flex-column w-50"
             >
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email" className="text-black fw-medium">
+                    Email
+                </label>
                 <input
                     {...register('email', {
                         required: {
@@ -83,9 +113,8 @@ export const LoginForm = () => {
                         },
                     })}
                 />
-                <span className="text-danger">{errors.email?.message}</span>
 
-                <label htmlFor="password" className="mt-3">
+                <label htmlFor="password" className="mt-3 text-black fw-medium">
                     Пароль
                 </label>
                 <input
@@ -101,7 +130,6 @@ export const LoginForm = () => {
                         },
                     })}
                 />
-                <span className="text-danger">{errors.password?.message}</span>
 
                 <button
                     type="submit"
@@ -114,10 +142,14 @@ export const LoginForm = () => {
                 </button>
                 <button
                     type="submit"
-                    className="btn btn-warning mt-2"
+                    className="btn btn-warning mt-2 d-flex align-items-center justify-content-center"
                     onClick={() => setMethodSelected('signUp')}
                 >
-                    Зарегистрироваться
+                    <ButtonLoader
+                        loading={registerMutation.isPending}
+                        size={24}
+                    />
+                    {!registerMutation.isPending && 'Зарегистрироваться'}
                 </button>
             </form>
         </>
