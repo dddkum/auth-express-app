@@ -1,20 +1,18 @@
-import { Bounce, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
-interface IToastProps {
+interface ICustomToastProps {
     message: string
     type: 'info' | 'success' | 'warning' | 'error' | 'default'
 }
-export const useCustomToast = ({ message, type }: IToastProps) => {
+
+export const useCustomToast = ({ message, type }: ICustomToastProps) => {
     toast(message, {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-        transition: Bounce,
         type: type,
+        hideProgressBar: true,
+        pauseOnFocusLoss: false,
+        autoClose: 5000,
+        position: 'bottom-right',
+        draggable: true,
+        theme: 'dark'
     })
 }
