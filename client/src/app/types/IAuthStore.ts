@@ -1,7 +1,7 @@
 export type AuthStore = {
-    token: string
+    token: string | null
+    setToken: (arg: string | null) => void
     isAuthenticated: boolean
-    setToken: (token: string) => void
     setIsAuthenticated: (isAuthorized: boolean) => void
     reset: () => void
 }

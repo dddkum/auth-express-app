@@ -5,18 +5,18 @@ import { AuthStore } from '../types/IAuthStore.ts'
 export const useAuthStore = create<AuthStore>()(
     persist(
         set => ({
-            token: '',
-            setToken: token => set({ token }),
+            token: null,
+            setToken: (token) => set({ token }),
             isAuthenticated: false,
             setIsAuthenticated: isAuthenticated => set({ isAuthenticated }),
             reset: () =>
                 set({
-                    token: '',
+                    token: null,
                     isAuthenticated: false,
                 }),
         }),
         {
-            name: 'authToken',
+            name: 'token',
         }
     )
 )
