@@ -5,6 +5,8 @@ import $api from '../../../app/api/api.ts'
 import { useAuthStore } from '../../../app/store/auth_store.ts'
 import { useCustomToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
 import { AxiosError } from 'axios'
+import { Link } from 'react-router-dom'
+import { PageLoader } from '../../../shared/loaders'
 export const Navbar = () => {
     const { setToken } = useAuthStore()
 
@@ -27,40 +29,46 @@ export const Navbar = () => {
         },
     })
 
-    return (
-        <div className={styles.Navbar}>
-            <div>
-                <button
-                    className={classnames(
-                        styles.navbar_tab,
-                        'btn',
-                        'btn-outline-light'
-                    )}
-                >
-                    Главная страница
-                </button>
-                <button
-                    className={classnames(
-                        styles.navbar_tab,
-                        'btn',
-                        'btn-outline-light'
-                    )}
-                >
-                    Галерея
-                </button>
+    if (logout.isPending) {
+        return <PageLoader loading={logout.isPending} />
+    } else {
+        return (
+            <div className={styles.Navbar}>
+                <div>
+                    <Link
+                        to="/"
+                        className={classnames(
+                            styles.navbar_tab,
+                            'btn',
+                            'btn-outline-light'
+                        )}
+                    >
+                        Главная страница
+                    </Link>
+                    <Link
+                        to="/gallery"
+                        className={classnames(
+                            styles.navbar_tab,
+                            'btn',
+                            'btn-outline-light'
+                        )}
+                    >
+                        Галерея
+                    </Link>
+                </div>
+                <div>
+                    <button
+                        className={classnames(
+                            styles.navbar_tab,
+                            'btn',
+                            'btn-outline-light'
+                        )}
+                        onClick={() => logout.mutate()}
+                    >
+                        Выход
+                    </button>
+                </div>
             </div>
-            <div>
-                <button
-                    className={classnames(
-                        styles.navbar_tab,
-                        'btn',
-                        'btn-outline-light'
-                    )}
-                    onClick={() => logout.mutate()}
-                >
-                    Выход
-                </button>
-            </div>
-        </div>
-    )
+        )
+    }
 }

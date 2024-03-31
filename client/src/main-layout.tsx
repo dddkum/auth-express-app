@@ -1,6 +1,5 @@
 import './app/styles/main.scss'
 import { ReactNode } from 'react'
-import { Navbar } from './widgets/Navbar'
 import { useQuery } from '@tanstack/react-query'
 import $api from './app/api/api.ts'
 import { useAuthStore } from './app/store/auth_store.ts'
@@ -9,7 +8,7 @@ interface Props {
     children: ReactNode
 }
 const MainLayout = ({ children }: Props) => {
-    const { setToken, token } = useAuthStore()
+    const { setToken } = useAuthStore()
 
     useQuery({
         queryKey: ['checkAuth'],
@@ -23,12 +22,7 @@ const MainLayout = ({ children }: Props) => {
         refetchInterval: 60000,
     })
 
-    return (
-        <>
-            {token && <Navbar />}
-            <div className="container-fluid">{children}</div>
-        </>
-    )
+    return <div className="container-fluid">{children}</div>
 }
 
 export default MainLayout

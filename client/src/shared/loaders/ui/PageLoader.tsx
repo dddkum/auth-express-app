@@ -13,6 +13,7 @@ export const PageLoader = ({ color, size, loading }: IPageLoaderProps) => {
             loading={loading}
             size={size || 15}
             speedMultiplier={1}
+            className='position-absolute top-50 start-50'
         />
     )
 }
