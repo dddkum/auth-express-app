@@ -1,4 +1,4 @@
-@import './custom-colors';
+@import './variables';
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 body {
@@ -19,15 +19,19 @@ input {
 }
 
 input {
-    background: white;
-    color: black;
-    border: 1px solid #fed321;
+    background: $white;
+    color: $black;
+    border: 1px solid $yellow;
     outline: none;
     height: 38px;
     padding: 5px 10px;
 
     &::placeholder {
-        color: black;
-        font-weight: 500;
+        color: $black;
+        font-weight: $fw-500;
     }
+}
+
+.btn-outline-light {
+    border-radius: $border-0;
 }

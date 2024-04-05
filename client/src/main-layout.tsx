@@ -1,4 +1,3 @@
-import './app/styles/main.scss'
 import { ReactNode } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import $api from './app/api/api.ts'

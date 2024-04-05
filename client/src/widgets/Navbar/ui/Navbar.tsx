@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import styles from './Navbar.module.scss'
+import './Navbar.scss'
 import { useMutation } from '@tanstack/react-query'
 import $api from '../../../app/api/api.ts'
 import { useAuthStore } from '../../../app/store/auth_store.ts'
@@ -33,41 +33,23 @@ export const Navbar = () => {
         return <PageLoader loading={logout.isPending} />
     } else {
         return (
-            <div className={styles.Navbar}>
-                <div>
-                    <Link
-                        to="/"
-                        className={classnames(
-                            styles.navbar_tab,
-                            'btn',
-                            'btn-outline-light'
-                        )}
-                    >
+            <div className="Navbar">
+                <div className="d-flex align-items-center h-100">
+                    <Link to="/" className="navbar_tab">
                         Главная страница
                     </Link>
-                    <Link
-                        to="/gallery"
-                        className={classnames(
-                            styles.navbar_tab,
-                            'btn',
-                            'btn-outline-light'
-                        )}
-                    >
+                    <Link to="/gallery" className={classnames('navbar_tab')}>
                         Галерея
                     </Link>
                 </div>
-                <div>
-                    <button
-                        className={classnames(
-                            styles.navbar_tab,
-                            'btn',
-                            'btn-outline-light'
-                        )}
-                        onClick={() => logout.mutate()}
-                    >
-                        Выход
-                    </button>
-                </div>
+
+                <Link
+                    to="/auth"
+                    className="navbar_tab"
+                    onClick={() => logout.mutate()}
+                >
+                    Выход
+                </Link>
             </div>
         )
     }

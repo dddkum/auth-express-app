@@ -1,0 +1,25 @@
+@import '../../../app/styles/variables';
+
+.Navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    background-color: $black;
+    min-height: 50px;
+    padding: 2px;
+}
+
+.navbar_tab {
+    height: 100%;
+    padding: 10px;
+    color: $white;
+    text-decoration: none;
+    &:hover {
+        color: $black;
+        background-color: $white;
+    }
+    transition: all 0.35s;
+}

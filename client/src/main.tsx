@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './app/styles/main.scss'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'

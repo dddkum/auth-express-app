@@ -10,7 +10,7 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-            <Navbar />
+            {token && <Navbar />}
             <MainLayout>
                 <Routes>
                     <Route
@@ -21,6 +21,16 @@ const Router = () => {
                     />
                     <Route
                         path="/"
+                        element={
+                            token ? (
+                                <MainPage />
+                            ) : (
+                                <Navigate to="/auth" replace />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/gallery"
                         element={
                             token ? (
                                 <MainPage />
