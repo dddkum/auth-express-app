@@ -1,17 +1,20 @@
+import { useState } from 'react'
+
+import { useMutation } from '@tanstack/react-query'
+import { AxiosError, AxiosResponse } from 'axios'
 import {
     FieldError,
     FieldErrors,
     SubmitHandler,
     useForm,
 } from 'react-hook-form'
-import { useMutation } from '@tanstack/react-query'
-import { useCustomToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
+import { toast } from 'react-toastify'
+
+import $api from '../../../app/api/api.ts'
 import { useAuthStore } from '../../../app/store/auth_store.ts'
 import { useCurrentUserStore } from '../../../app/store/currentUser_store.ts'
+import { customToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
 import { ButtonLoader } from '../../../shared/loaders'
-import { useState } from 'react'
-import $api from '../../../app/api/api.ts'
-import { AxiosError, AxiosResponse } from 'axios'
 
 interface IFormInput {
     email: string
@@ -32,7 +35,7 @@ export const LoginForm = () => {
 
     const loginMutation = useMutation<
         AxiosResponse,
-        AxiosError<any, any> | any
+        AxiosError<void, void> | any
     >({
         mutationFn(data) {
             return $api.post('/login', data)
@@ -41,13 +44,13 @@ export const LoginForm = () => {
             setToken(response.data.accessToken)
             setUser(response.data.user)
             setIsAuthenticated(true)
-            useCustomToast({
+            customToast({
                 message: 'Вы вошли в свой профиль',
                 type: 'success',
             })
         },
         onError: error => {
-            useCustomToast({
+            customToast({
                 message: error.response.data.message,
                 type: 'error',
             })
@@ -57,7 +60,7 @@ export const LoginForm = () => {
 
     const registerMutation = useMutation<
         AxiosResponse,
-        AxiosError<any, any> | any
+        AxiosError<void, void> | any
     >({
         mutationFn(data) {
             return $api.post('/registration', data)
@@ -66,26 +69,19 @@ export const LoginForm = () => {
             setToken(response.data.accessToken)
             setUser(response.data.user)
             setIsAuthenticated(true)
-            useCustomToast({
-                message:
-                    'Вы успешно зарегистрировались и будете перенаправлены в свой профиль',
-                type: 'success',
-            })
+            toast(
+                'Вы успешно зарегистрировались и будете перенаправлены в свой профиль',
+                { type: 'success' }
+            )
         },
         onError(error) {
-            useCustomToast({
-                message: error.response.data.message,
-                type: 'error',
-            })
+            toast(error.response.data.message, { type: 'error' })
         },
     })
 
     const handleValidationError = (errors: FieldErrors<FieldError>) => {
         for (const [_, error] of Object.entries(errors)) {
-            useCustomToast({
-                message: (error.message ?? error) as string,
-                type: 'error',
-            })
+            toast((error.message ?? error) as string, { type: 'error' })
         }
     }
 

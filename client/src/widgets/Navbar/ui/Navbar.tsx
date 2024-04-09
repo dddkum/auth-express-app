@@ -1,28 +1,30 @@
+import { useMutation } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import classnames from 'classnames'
 import './Navbar.scss'
-import { useMutation } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
+
 import $api from '../../../app/api/api.ts'
 import { useAuthStore } from '../../../app/store/auth_store.ts'
-import { useCustomToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
-import { AxiosError } from 'axios'
-import { Link } from 'react-router-dom'
+import { customToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
 import { PageLoader } from '../../../shared/loaders'
+
 export const Navbar = () => {
     const { setToken } = useAuthStore()
 
-    const logout = useMutation<void, AxiosError<any, any> | any>({
+    const logout = useMutation<void, AxiosError<void, void> | any>({
         mutationFn() {
             return $api.post('/logout')
         },
         onSuccess() {
             setToken(null)
-            useCustomToast({
+            customToast({
                 message: 'До свидания!',
                 type: 'success',
             })
         },
         onError(error) {
-            useCustomToast({
+            customToast({
                 message: error.response.data.message,
                 type: 'error',
             })
@@ -30,16 +32,16 @@ export const Navbar = () => {
     })
 
     if (logout.isPending) {
-        return <PageLoader loading={logout.isPending} />
+        return <PageLoader />
     } else {
         return (
             <div className="Navbar">
                 <div className="d-flex align-items-center h-100">
                     <Link to="/" className="navbar_tab">
-                        Главная страница
+                        Главная
                     </Link>
-                    <Link to="/gallery" className={classnames('navbar_tab')}>
-                        Галерея
+                    <Link to="/diary" className={classnames('navbar_tab')}>
+                        Дневник
                     </Link>
                 </div>
 

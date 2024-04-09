@@ -3,7 +3,7 @@ import { PropagateLoader } from 'react-spinners'
 interface IPageLoaderProps {
     color?: string
     size?: number
-    loading: boolean
+    loading?: boolean
 }
 export const PageLoader = ({ color, size, loading }: IPageLoaderProps) => {
     return (

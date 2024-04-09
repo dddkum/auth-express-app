@@ -1,9 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { MainPage } from '../../pages/MainPage'
-import { useAuthStore } from '../store/auth_store.ts'
-import { AuthPage } from '../../pages/AuthPage'
-import { Navbar } from '../../widgets/Navbar'
+
 import MainLayout from '../../main-layout.tsx'
+import { AuthPage } from '../../pages/AuthPage'
+import { DiaryPage } from '../../pages/DiaryPage'
+import { MainPage } from '../../pages/MainPage'
+import { Navbar } from '../../widgets/Navbar'
+import { useAuthStore } from '../store/auth_store.ts'
 
 const Router = () => {
     const { token } = useAuthStore()
@@ -30,10 +32,10 @@ const Router = () => {
                         }
                     />
                     <Route
-                        path="/gallery"
+                        path="/diary"
                         element={
                             token ? (
-                                <MainPage />
+                                <DiaryPage />
                             ) : (
                                 <Navigate to="/auth" replace />
                             )

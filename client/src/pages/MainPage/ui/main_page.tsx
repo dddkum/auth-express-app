@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+
 import $api from '../../../app/api/api.ts'
 import { PageLoader } from '../../../shared/loaders'
 
@@ -8,6 +9,7 @@ export const MainPage = () => {
         queryFn: async () => {
             return $api.get('/users')
         },
+        staleTime: 600000,
     })
 
     return (
