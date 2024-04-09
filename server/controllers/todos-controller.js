@@ -11,6 +11,16 @@ class TodosController {
       next(e);
     }
   }
+
+  async postTodo(req, res, next) {
+    try {
+      const todoData = await todosService.postTodo(req.body);
+      return res.json(res.status(200).json(todoData));
+    } catch (e) {
+      next(e)
+    }
+  }
+
 }
 
 module.exports = new TodosController();

@@ -5,6 +5,11 @@ class TodosService {
     const todos = await Todos.find({});
     return todos;
   }
+
+  async postTodo(todoData){
+    const todo = await Todos.create(todoData);
+    return todo;
+  }
 }
 
 module.exports = new TodosService();

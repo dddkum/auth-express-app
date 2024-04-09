@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const TodosSchema = new Schema({
-  todo: { type: Schema.Types.ObjectId, ref: "User" },
+  todo: { type: String },
   noteDate: { type: Date },
   deadLineDate: { type: Date },
 });
