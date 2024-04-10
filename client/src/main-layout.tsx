@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
+
 import { useQuery } from '@tanstack/react-query'
+
 import $api from './app/api/api.ts'
 import { useAuthStore } from './app/store/auth_store.ts'
 
@@ -18,7 +20,7 @@ const MainLayout = ({ children }: Props) => {
             setToken(response.data.accessToken)
             return response.data
         },
-        refetchInterval: 60000,
+        staleTime: 300000,
     })
 
     return <div className="container-fluid">{children}</div>

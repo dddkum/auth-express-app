@@ -14,6 +14,20 @@ body {
     font-family: 'Jost', sans-serif;
 }
 
+::-webkit-scrollbar {
+    height: 4px;
+    width: 5px;
+    background-color: $black;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $white;
+}
+
+::-webkit-scrollbar-track {
+    border-width: 0;
+}
+
 .container-fluid {
     min-height: 100vh;
     padding: 0 10px 50px 10px;
