@@ -1,0 +1,27 @@
+@import './variables';
+
+input {
+    background: $white;
+    color: $black;
+    border: 1px solid $black;
+    outline: none;
+    height: 38px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: $fs-16;
+
+    &::placeholder {
+        color: $secondary;
+        font-weight: $fw-500;
+    }
+
+    @include font-size($fs-16);
+}
+
+textarea {
+    border-radius: 10px;
+    border: 1px solid $black;
+    outline: none;
+    padding: 5px 10px;
+    @include font-size($fs-16);
+}

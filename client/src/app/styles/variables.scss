@@ -24,7 +24,45 @@ $fw-600: 600;
 $fw-700: 700;
 $fw-900: 900;
 
+$fs-10: 10px;
+$fs-11: 11px;
+$fs-12: 12px;
+$fs-13: 13px;
+$fs-14: 14px;
+$fs-15: 15px;
+$fs-16: 16px;
+$fs-17: 17px;
+$fs-18: 18px;
+$fs-19: 19px;
+$fs-20: 20px;
+$fs-21: 21px;
+$fs-22: 22px;
+$fs-23: 23px;
+$fs-24: 24px;
+$fs-25: 25px;
+
 //borders
 $border-0: 0;
 $border-5: 5px;
 $border-10: 10px;
+
+//mixins
+@mixin font-size($size) {
+    font-size: $size;
+
+    @media screen and (max-width: 480px) {
+        font-size: $size - 5;
+    }
+
+    @media screen and (min-width: 481px) and (max-width: 767px) {
+        font-size: $size - 4;
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 1200px) {
+        font-size: $size - 3;
+    }
+
+    @media screen and (min-width: 1201px) and (max-width: 1920px) {
+        font-size: $size - 1;
+    }
+}

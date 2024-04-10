@@ -37,6 +37,7 @@ const DiaryTodoForm = () => {
             customToast({
                 message: (error.message ?? error) as string,
                 type: 'error',
+                theme: 'light',
             })
         }
     }
@@ -46,23 +47,30 @@ const DiaryTodoForm = () => {
             return $api.post('/todo', formData)
         },
         onSuccess() {
-            customToast({ message: 'Задание записано', type: 'success' })
+            customToast({
+                message: 'Задание записано',
+                type: 'success',
+                theme: 'light',
+            })
         },
         onError(error) {
             customToast({
                 message: error.response.data.message,
                 type: 'error',
+                theme: 'light',
             })
         },
     })
     return (
-        <div className="px-5 py-3 w-50 mx-auto">
+        <div className="px-0 px-md-5 py-3 w-50 mx-auto">
             <form
                 onSubmit={handleSubmit(onSubmit, handleValidationError)}
                 className="d-flex flex-column align-items-center"
             >
                 <div className="w-100">
-                    <label>Введите дату получения задания</label>
+                    <label className="text-body-tertiary">
+                        Введите дату получения задания
+                    </label>
                     <Controller
                         control={control}
                         name="noteDate"
@@ -79,7 +87,9 @@ const DiaryTodoForm = () => {
                 </div>
 
                 <div className="w-100">
-                    <label>Введите крайний срок сдачи задания</label>
+                    <label className="text-body-tertiary">
+                        Введите крайний срок сдачи задания
+                    </label>
                     <Controller
                         control={control}
                         name="deadLineDate"
@@ -96,7 +106,7 @@ const DiaryTodoForm = () => {
                 </div>
 
                 <div className="w-100">
-                    <label>Опишите задачу</label>
+                    <label className="text-body-tertiary">Опишите задачу</label>
                     <textarea
                         {...register('todo', {
                             required: 'Это поле обязательно для заполнения',

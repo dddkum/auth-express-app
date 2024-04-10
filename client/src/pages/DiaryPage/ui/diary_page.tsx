@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { useQuery } from '@tanstack/react-query'
 
 import $api from '../../../app/api/api.ts'
@@ -10,12 +12,19 @@ import DiaryTodosList from './diary_todos_list.tsx'
 
 export const DiaryPage = () => {
     const { setTodos } = useTodosStore()
-    const { isLoading } = useQuery({
+    const { isLoading, data } = useQuery({
         queryKey: ['todos'],
-        queryFn: () => {
-            return $api.get('/todos').then(response => setTodos(response.data))
+        queryFn: async () => {
+            return $api.get('/todos')
         },
+        staleTime: 600000,
     })
+
+    useEffect(() => {
+        if (data !== null) {
+            setTodos(data?.data)
+        }
+    }, [data])
 
     return (
         <>

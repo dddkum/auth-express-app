@@ -6,7 +6,7 @@ const DiaryTodosList = () => {
     const { todos } = useTodosStore()
     return (
         <div className="mx-auto w-50">
-            {todos.length > 0 ? (
+            {todos?.length > 0 ? (
                 todos.map((todo, index) => (
                     <div
                         key={index}
@@ -18,9 +18,9 @@ const DiaryTodosList = () => {
                         >
                             {index}
                         </span>
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex flex-column flex-md-row justify-content-between gap-1">
                             <p className="fw-bold m-0">
-                                Дата записи: {format(todo.noteDate, 'P')}.
+                                Дата записи: {format(todo.noteDate, 'P')}
                             </p>
                             <p className="fw-bold m-0">
                                 Срок выполнения до:{' '}

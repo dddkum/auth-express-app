@@ -21,12 +21,14 @@ export const Navbar = () => {
             customToast({
                 message: 'До свидания!',
                 type: 'success',
+                theme: 'light',
             })
         },
         onError(error) {
             customToast({
                 message: error.response.data.message,
                 type: 'error',
+                theme: 'light',
             })
         },
     })

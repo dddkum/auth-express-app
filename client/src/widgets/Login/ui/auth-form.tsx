@@ -47,12 +47,14 @@ export const LoginForm = () => {
             customToast({
                 message: 'Вы вошли в свой профиль',
                 type: 'success',
+                theme: 'dark',
             })
         },
         onError: error => {
             customToast({
                 message: error.response.data.message,
                 type: 'error',
+                theme: 'dark',
             })
             setIsAuthenticated(false)
         },
@@ -69,19 +71,29 @@ export const LoginForm = () => {
             setToken(response.data.accessToken)
             setUser(response.data.user)
             setIsAuthenticated(true)
-            toast(
-                'Вы успешно зарегистрировались и будете перенаправлены в свой профиль',
-                { type: 'success' }
-            )
+            customToast({
+                message:
+                    'Вы успешно зарегистрировались и будете перенаправлены в свой профиль',
+                type: 'success',
+                theme: 'dark',
+            })
         },
         onError(error) {
-            toast(error.response.data.message, { type: 'error' })
+            customToast({
+                message: error.response.data.message,
+                type: 'error',
+                theme: 'light',
+            })
         },
     })
 
     const handleValidationError = (errors: FieldErrors<FieldError>) => {
         for (const [_, error] of Object.entries(errors)) {
-            toast((error.message ?? error) as string, { type: 'error' })
+            customToast({
+                message: (error.message ?? error) as string,
+                type: 'error',
+                theme: 'dark',
+            })
         }
     }
 
@@ -94,10 +106,15 @@ export const LoginForm = () => {
                 )}
                 className="d-flex flex-column w-50"
             >
-                <label htmlFor="email" className="text-black fw-medium">
+                <label
+                    htmlFor="email"
+                    className="text-black fw-medium text-body-tertiary"
+                >
                     Email
                 </label>
                 <input
+                    className="fw-medium"
+                    placeholder="example@email.com"
                     {...register('email', {
                         required: {
                             value: true,
@@ -110,11 +127,16 @@ export const LoginForm = () => {
                     })}
                 />
 
-                <label htmlFor="password" className="mt-3 text-black fw-medium">
+                <label
+                    htmlFor="password"
+                    className="mt-3 text-black fw-medium text-body-tertiary"
+                >
                     Пароль
                 </label>
                 <input
+                    className="fw-medium"
                     type="password"
+                    placeholder="******"
                     {...register('password', {
                         required: {
                             value: true,
@@ -129,7 +151,7 @@ export const LoginForm = () => {
 
                 <button
                     type="submit"
-                    className="btn btn-outline-warning mt-5 d-flex align-items-center justify-content-center"
+                    className="btn btn-outline-dark mt-5 d-flex align-items-center justify-content-center fw-bold"
                     disabled={loginMutation.isPending}
                     onClick={() => setMethodSelected('signIn')}
                 >
@@ -138,7 +160,7 @@ export const LoginForm = () => {
                 </button>
                 <button
                     type="submit"
-                    className="btn btn-warning mt-2 d-flex align-items-center justify-content-center"
+                    className="btn btn-dark mt-2 text-center text-break fw-bold"
                     onClick={() => setMethodSelected('signUp')}
                 >
                     <ButtonLoader
