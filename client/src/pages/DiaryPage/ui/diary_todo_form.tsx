@@ -27,8 +27,7 @@ const DiaryTodoForm = () => {
     const { setTodos, todos } = useTodosStore()
 
     const onSubmit = data => {
-        postTodo.mutate(data)
-        setTodos([...todos, data])
+        postTodo.mutate({ ...data, id: todos.length + 1 })
     }
 
     const handleValidationError = (errors: FieldErrors<FieldError>) => {
@@ -36,14 +35,16 @@ const DiaryTodoForm = () => {
             customToast({
                 message: (error.message ?? error) as string,
                 type: 'error',
-                theme: 'light',
+                theme: 'dark',
             })
         }
     }
 
     const postTodo = useMutation<AxiosResponse, AxiosError<void, void> | any>({
         mutationFn(formData) {
-            return $api.post('/todo', formData)
+            return $api
+                .post('/todo', formData)
+                .then(() => setTodos([...todos, formData]))
         },
         onSuccess() {
             customToast({
@@ -56,10 +57,11 @@ const DiaryTodoForm = () => {
             customToast({
                 message: error.response.data.message,
                 type: 'error',
-                theme: 'light',
+                theme: 'dark',
             })
         },
     })
+
     return (
         <div className="px-0 px-md-5 py-3 w-50 mx-auto">
             <form

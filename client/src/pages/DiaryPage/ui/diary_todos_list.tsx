@@ -15,7 +15,7 @@ const DiaryTodosList = () => {
                             className="badge bg-danger position-absolute rounded-circle"
                             style={{ top: '-5px', left: '-5px' }}
                         >
-                            {index}
+                            {todo.id}
                         </span>
                         <div className="d-flex flex-column flex-md-row justify-content-between gap-1">
                             <p className="fw-bold m-0">
@@ -33,7 +33,7 @@ const DiaryTodosList = () => {
                     </div>
                 ))
             ) : (
-                <div>Заданий еще нет</div>
+                <div className="fw-bold text-center">Заданий еще нет</div>
             )}
         </div>
     )

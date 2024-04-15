@@ -9,19 +9,13 @@ import DiaryTodosList from './diary_todos_list.tsx'
 
 export const DiaryPage = () => {
     const { setTodos } = useTodosStore()
-    const { isLoading, data } = useQuery({
+    const { isLoading } = useQuery({
         queryKey: ['todos'],
         queryFn: async () => {
-            return $api.get('/todos')
+            return $api.get('/todos').then(res => setTodos(res.data))
         },
         staleTime: 600000,
     })
-
-    useEffect(() => {
-        if (data !== null) {
-            setTodos(data?.data)
-        }
-    }, [data])
 
     return (
         <>
