@@ -5,12 +5,11 @@ import {
     Routes,
     useLocation,
 } from 'react-router-dom'
-
-import MainLayout from '../../main-layout.tsx'
-import { AuthPage } from '../../pages/AuthPage'
-import { DiaryPage } from '../../pages/DiaryPage'
-import { MainPage } from '../../pages/MainPage'
-import { Navbar } from '../../widgets/Navbar'
+import MainLayout from '@/main-layout.tsx'
+import { AuthPage } from '@/pages/AuthPage'
+import { DiaryPage } from '@/pages/DiaryPage'
+import { MainPage } from '@/pages/MainPage'
+import { Navbar } from '@/widgets/Navbar'
 import { useAuthStore } from '../store/auth_store.ts'
 
 const AppRoutes = () => {

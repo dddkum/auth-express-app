@@ -1,12 +1,9 @@
 import { useEffect } from 'react'
-
 import { useQuery } from '@tanstack/react-query'
-
-import $api from '../../../app/api/api.ts'
-import { useTodosStore } from '../../../app/store/todos_store.ts'
-import background from '../../../shared/images/diary_background.webp'
-import { PageLoader } from '../../../shared/loaders'
-
+import $api from '@/app/api/api.ts'
+import { useTodosStore } from '@/app/store/todos_store.ts'
+import background from '@/shared/images/diary_background.webp'
+import { PageLoader } from '@/shared/loaders'
 import DiaryTodoForm from './diary_todo_form.tsx'
 import DiaryTodosList from './diary_todos_list.tsx'
 

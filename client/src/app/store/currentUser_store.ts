@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-
 import { CurrentUserStore } from '../types/ICurrentUser.ts'
 import { IUser } from '../types/IUser.ts'
 

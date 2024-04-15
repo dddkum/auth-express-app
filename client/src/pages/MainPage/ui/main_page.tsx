@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-
-import $api from '../../../app/api/api.ts'
-import background from '../../../shared/images/main_background.webp'
-import { PageLoader } from '../../../shared/loaders'
+import $api from '@/app/api/api.ts'
+import background from '@/shared/images/main_background.webp'
+import { PageLoader } from '@/shared/loaders'
 
 export const MainPage = () => {
     const usersQuery = useQuery({

@@ -41,32 +41,6 @@ module.exports = {
             { argsIgnorePattern: '^_' },
         ],
         'prettier/prettier': 'warn', // Enable Prettier rules
-        'import/order': [
-            'warn',
-            {
-                'newlines-between': 'always',
-                groups: [
-                    'builtin',
-                    'external',
-                    'internal',
-                    'parent',
-                    'sibling',
-                    'index',
-                ],
-                pathGroups: [
-                    {
-                        pattern: 'react',
-                        group: 'external',
-                        position: 'before',
-                    },
-                ],
-                pathGroupsExcludedImportTypes: ['react'],
-                alphabetize: {
-                    order: 'asc',
-                    caseInsensitive: true,
-                },
-            },
-        ],
     },
     settings: {
         react: {

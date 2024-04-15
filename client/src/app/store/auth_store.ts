@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-
 import { AuthStore } from '../types/IAuthStore.ts'
 
 export const useAuthStore = create<AuthStore>()(

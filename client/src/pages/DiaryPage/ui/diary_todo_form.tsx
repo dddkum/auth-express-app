@@ -2,10 +2,9 @@ import { useMutation } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker'
 import { Controller, FieldError, FieldErrors, useForm } from 'react-hook-form'
-
-import $api from '../../../app/api/api.ts'
-import { useTodosStore } from '../../../app/store/todos_store.ts'
-import { customToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
+import $api from '@/app/api/api.ts'
+import { useTodosStore } from '@/app/store/todos_store.ts'
+import { customToast } from '@/shared/hooks/UseCustomToast/UseCustomToast.ts'
 
 interface IFormData {
     todo: string

@@ -3,11 +3,10 @@ import { AxiosError } from 'axios'
 import classnames from 'classnames'
 import './Navbar.scss'
 import { Link } from 'react-router-dom'
-
-import $api from '../../../app/api/api.ts'
-import { useAuthStore } from '../../../app/store/auth_store.ts'
-import { customToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
-import { PageLoader } from '../../../shared/loaders'
+import $api from '@/app/api/api.ts'
+import { useAuthStore } from '@/app/store/auth_store.ts'
+import { customToast } from '@/shared/hooks/UseCustomToast/UseCustomToast.ts'
+import { PageLoader } from '@/shared/loaders'
 
 export const Navbar = () => {
     const { setToken } = useAuthStore()

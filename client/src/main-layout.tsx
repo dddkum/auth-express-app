@@ -1,9 +1,7 @@
 import { ReactNode } from 'react'
-
 import { useQuery } from '@tanstack/react-query'
-
-import $api from './app/api/api.ts'
-import { useAuthStore } from './app/store/auth_store.ts'
+import $api from '@/app/api/api.ts'
+import { useAuthStore } from '@/app/store/auth_store.ts'
 
 interface Props {
     children: ReactNode

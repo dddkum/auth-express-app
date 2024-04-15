@@ -1,5 +1,6 @@
-import background from '../../../shared/images/auth_background.webp'
-import { LoginForm } from '../../../widgets/Login'
+import background from '@/shared/images/auth_background.webp'
+import { LoginForm } from '@/widgets/Login'
+
 export const AuthPage = () => {
     return (
         <div

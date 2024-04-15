@@ -1,20 +1,17 @@
 import { useState } from 'react'
-
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError, AxiosResponse } from 'axios'
+import $api from '@/app/api/api.ts'
+import { useAuthStore } from '@/app/store/auth_store.ts'
+import { useCurrentUserStore } from '@/app/store/currentUser_store.ts'
+import { customToast } from '@/shared/hooks/UseCustomToast/UseCustomToast.ts'
+import { ButtonLoader } from '@/shared/loaders'
 import {
     FieldError,
     FieldErrors,
     SubmitHandler,
     useForm,
 } from 'react-hook-form'
-import { toast } from 'react-toastify'
-
-import $api from '../../../app/api/api.ts'
-import { useAuthStore } from '../../../app/store/auth_store.ts'
-import { useCurrentUserStore } from '../../../app/store/currentUser_store.ts'
-import { customToast } from '../../../shared/hooks/UseCustomToast/UseCustomToast.ts'
-import { ButtonLoader } from '../../../shared/loaders'
 
 interface IFormInput {
     email: string

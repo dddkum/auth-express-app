@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
-
-import { useTodosStore } from '../../../app/store/todos_store.ts'
+import { useTodosStore } from '@/app/store/todos_store.ts'
 
 const DiaryTodosList = () => {
     const { todos } = useTodosStore()
